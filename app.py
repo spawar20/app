@@ -5,10 +5,10 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def calculate():
-    result = None
+    result = {}
     gst = 0
     total = 0
-    values = {}  # Store values entered by the user
+    gst_rate = 18  # Fixed GST rate at 18%
 
     if request.method == "POST":
         try:
@@ -25,24 +25,6 @@ def calculate():
             morning_breakfast = float(request.form.get("morning_breakfast", 0))
             pedhe = float(request.form.get("pedhe", 0))
             gst_option = request.form.get("gst_option", "no")  # Default to "no"
-            gst_rate = float(request.form.get("gst_rate", 18))  # User input for GST, default 18%
-
-            # Store values for pre-filling the form
-            values = {
-                "hall_rent": hall_rent,
-                "food": food,
-                "miscellaneous": miscellaneous,
-                "guruji": guruji,
-                "saman": saman,
-                "photo": photo,
-                "decoration": decoration,
-                "evening_tea": evening_tea,
-                "dinner": dinner,
-                "morning_breakfast": morning_breakfast,
-                "pedhe": pedhe,
-                "gst_rate": gst_rate,
-                "gst_option": gst_option,
-            }
 
             # Calculate GST only if "Yes" is selected
             if gst_option == "yes":
@@ -68,13 +50,13 @@ def calculate():
                 "morning_breakfast": morning_breakfast,
                 "pedhe": pedhe,
                 "gst": round(gst, 2),
-                "gst_rate": gst_rate,  # Keep user-entered GST rate
+                "gst_rate": gst_rate,  # Fixed GST rate
                 "total": round(total, 2)
             }
         except ValueError:
-            result = "Invalid input! Please enter numeric values."
+            result = {"error": "Invalid input! Please enter numeric values."}
 
-    return render_template("index.html", result=result, values=values)
+    return render_template("index.html", result=result)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Get port from environment variables
