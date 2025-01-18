@@ -9,43 +9,46 @@
     <h1>Event Expense Calculator</h1>
     <form method="POST">
         <label for="hall_rent">Hall Rent:</label>
-        <input type="number" id="hall_rent" name="hall_rent" step="0.01" required><br><br>
+        <input type="number" id="hall_rent" name="hall_rent" step="0.01" value="{{ values.hall_rent if values.hall_rent is not none else '' }}" required><br><br>
 
         <label for="food">Food Cost:</label>
-        <input type="number" id="food" name="food" step="0.01" required><br><br>
+        <input type="number" id="food" name="food" step="0.01" value="{{ values.food if values.food is not none else '' }}" required><br><br>
 
         <label for="miscellaneous">Miscellaneous Cost (Default ₹30000):</label>
-        <input type="number" id="miscellaneous" name="miscellaneous" value="30000" step="0.01"><br><br>
+        <input type="number" id="miscellaneous" name="miscellaneous" value="{{ values.miscellaneous if values.miscellaneous is not none else 30000 }}" step="0.01"><br><br>
 
         <label for="guruji">Guruji Cost:</label>
-        <input type="number" id="guruji" name="guruji" step="0.01"><br><br>
+        <input type="number" id="guruji" name="guruji" step="0.01" value="{{ values.guruji if values.guruji is not none else '' }}"><br><br>
 
         <label for="saman">Saman Cost:</label>
-        <input type="number" id="saman" name="saman" step="0.01"><br><br>
+        <input type="number" id="saman" name="saman" step="0.01" value="{{ values.saman if values.saman is not none else '' }}"><br><br>
 
         <label for="photo">Photo Cost:</label>
-        <input type="number" id="photo" name="photo" step="0.01"><br><br>
+        <input type="number" id="photo" name="photo" step="0.01" value="{{ values.photo if values.photo is not none else '' }}"><br><br>
 
         <label for="decoration">Decoration Cost (Default ₹45000):</label>
-        <input type="number" id="decoration" name="decoration" value="45000" step="0.01"><br><br>
+        <input type="number" id="decoration" name="decoration" value="{{ values.decoration if values.decoration is not none else 45000 }}" step="0.01"><br><br>
 
         <label for="evening_tea">Evening Breakfast/Tea Cost:</label>
-        <input type="number" id="evening_tea" name="evening_tea" step="0.01"><br><br>
+        <input type="number" id="evening_tea" name="evening_tea" step="0.01" value="{{ values.evening_tea if values.evening_tea is not none else '' }}"><br><br>
 
         <label for="dinner">Dinner Cost:</label>
-        <input type="number" id="dinner" name="dinner" step="0.01"><br><br>
+        <input type="number" id="dinner" name="dinner" step="0.01" value="{{ values.dinner if values.dinner is not none else '' }}"><br><br>
 
         <label for="morning_breakfast">Morning Breakfast Cost:</label>
-        <input type="number" id="morning_breakfast" name="morning_breakfast" step="0.01"><br><br>
+        <input type="number" id="morning_breakfast" name="morning_breakfast" step="0.01" value="{{ values.morning_breakfast if values.morning_breakfast is not none else '' }}"><br><br>
 
         <label for="pedhe">Pedhe Cost:</label>
-        <input type="number" id="pedhe" name="pedhe" step="0.01"><br><br>
+        <input type="number" id="pedhe" name="pedhe" step="0.01" value="{{ values.pedhe if values.pedhe is not none else '' }}"><br><br>
 
-        <label>Include GST on Hall Rent (18%):</label><br>
-        <input type="radio" id="gst_yes" name="gst_option" value="yes" checked>
+        <label>Include GST on Hall Rent (18% by default):</label><br>
+        <input type="radio" id="gst_yes" name="gst_option" value="yes" {% if values.gst_option == 'yes' %}checked{% endif %}>
         <label for="gst_yes">Yes</label><br>
-        <input type="radio" id="gst_no" name="gst_option" value="no">
+        <input type="radio" id="gst_no" name="gst_option" value="no" {% if values.gst_option == 'no' %}checked{% endif %}>
         <label for="gst_no">No</label><br><br>
+
+        <label for="gst_rate">GST Rate (%) (Default 18%):</label>
+        <input type="number" id="gst_rate" name="gst_rate" value="{{ values.gst_rate if values.gst_rate is not none else 18 }}" step="0.01"><br><br>
 
         <button type="submit">Calculate</button>
     </form>
@@ -54,7 +57,7 @@
         <h2>Calculation Result:</h2>
         <p><strong>Hall Rent:</strong> ₹{{ result.hall_rent }}</p>
         {% if result.gst > 0 %}
-        <p><strong>GST (18% on Hall Rent):</strong> ₹{{ result.gst }}</p>
+        <p><strong>GST ({{ result.gst_rate }}% on Hall Rent):</strong> ₹{{ result.gst }}</p>
         {% else %}
         <p><strong>GST:</strong> Not Included</p>
         {% endif %}
