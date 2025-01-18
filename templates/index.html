@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,36 +10,68 @@
     <h1>Event Expense Calculator</h1>
     <form method="POST">
         <label for="hall_rent">Hall Rent:</label>
-        <input type="number" id="hall_rent" name="hall_rent" step="0.01" value="{{ result.hall_rent if result.hall_rent is not none else '' }}" required><br><br>
+        <input type="number" id="hall_rent" name="hall_rent" step="0.01" required><br><br>
 
         <label for="food">Food Cost:</label>
-        <input type="number" id="food" name="food" step="0.01" value="{{ result.food if result.food is not none else '' }}" required><br><br>
+        <input type="number" id="food" name="food" step="0.01" required><br><br>
 
         <label for="miscellaneous">Miscellaneous Cost (Default ₹30000):</label>
-        <input type="number" id="miscellaneous" name="miscellaneous" value="{{ result.miscellaneous if result.miscellaneous is not none else 30000 }}" step="0.01"><br><br>
+        <input type="number" id="miscellaneous" name="miscellaneous" value="30000" step="0.01"><br><br>
 
-        <label>Include GST on Hall Rent (18% by default):</label><br>
-        <input type="radio" id="gst_yes" name="gst_option" value="yes" {% if result.gst_option == 'yes' %}checked{% endif %}>
+        <label for="guruji">Guruji Cost:</label>
+        <input type="number" id="guruji" name="guruji" step="0.01"><br><br>
+
+        <label for="saman">Saman Cost:</label>
+        <input type="number" id="saman" name="saman" step="0.01"><br><br>
+
+        <label for="photo">Photo Cost:</label>
+        <input type="number" id="photo" name="photo" step="0.01"><br><br>
+
+        <label for="decoration">Decoration Cost (Default ₹45000):</label>
+        <input type="number" id="decoration" name="decoration" value="45000" step="0.01"><br><br>
+
+        <label for="evening_tea">Evening Breakfast/Tea Cost:</label>
+        <input type="number" id="evening_tea" name="evening_tea" step="0.01"><br><br>
+
+        <label for="dinner">Dinner Cost:</label>
+        <input type="number" id="dinner" name="dinner" step="0.01"><br><br>
+
+        <label for="morning_breakfast">Morning Breakfast Cost:</label>
+        <input type="number" id="morning_breakfast" name="morning_breakfast" step="0.01"><br><br>
+
+        <label for="pedhe">Pedhe Cost:</label>
+        <input type="number" id="pedhe" name="pedhe" step="0.01"><br><br>
+
+        <label>Include GST on Hall Rent (18%):</label><br>
+        <input type="radio" id="gst_yes" name="gst_option" value="yes" checked>
         <label for="gst_yes">Yes</label><br>
-        <input type="radio" id="gst_no" name="gst_option" value="no" {% if result.gst_option == 'no' %}checked{% endif %}>
+        <input type="radio" id="gst_no" name="gst_option" value="no">
         <label for="gst_no">No</label><br><br>
 
         <button type="submit">Calculate</button>
     </form>
 
     {% if result %}
-        {% if result.error %}
-            <h2>{{ result.error }}</h2>
+        <h2>Calculation Result:</h2>
+        <p><strong>Hall Rent:</strong> ₹{{ result.hall_rent }}</p>
+        {% if result.gst > 0 %}
+        <p><strong>GST (18% on Hall Rent):</strong> ₹{{ result.gst }}</p>
         {% else %}
-            <h2>Calculation Result:</h2>
-            <p><strong>Hall Rent:</strong> ₹{{ result.hall_rent }}</p>
-            {% if result.gst %}
-                <p><strong>GST ({{ result.gst_rate }}% on Hall Rent):</strong> ₹{{ result.gst }}</p>
-            {% else %}
-                <p><strong>GST:</strong> Not Included</p>
-            {% endif %}
-            <p><strong>Total:</strong> ₹{{ result.total }}</p>
+        <p><strong>GST:</strong> Not Included</p>
         {% endif %}
+        <p><strong>Food Cost:</strong> ₹{{ result.food }}</p>
+        <p><strong>Miscellaneous Cost:</strong> ₹{{ result.miscellaneous }}</p>
+        <p><strong>Guruji Cost:</strong> ₹{{ result.guruji }}</p>
+        <p><strong>Saman Cost:</strong> ₹{{ result.saman }}</p>
+        <p><strong>Photo Cost:</strong> ₹{{ result.photo }}</p>
+        <p><strong>Decoration Cost:</strong> ₹{{ result.decoration }}</p>
+        <p><strong>Evening Breakfast/Tea Cost:</strong> ₹{{ result.evening_tea }}</p>
+        <p><strong>Dinner Cost:</strong> ₹{{ result.dinner }}</p>
+        <p><strong>Morning Breakfast Cost:</strong> ₹{{ result.morning_breakfast }}</p>
+        <p><strong>Pedhe Cost:</strong> ₹{{ result.pedhe }}</p>
+        <h3><strong>Total:</strong> ₹{{ result.total }}</h3>
+    {% elif result is not none %}
+        <h2>{{ result }}</h2>
     {% endif %}
 </body>
 </html>
