@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def calculate():
-    result = None
+    result = {}
     gst = 0
     total = 0
     values = {}  # Store values entered by the user
@@ -54,7 +54,7 @@ def calculate():
                 photo + decoration + evening_tea + dinner + morning_breakfast + pedhe
             )
 
-            # Result summary
+            # Result summary (always return a dictionary, even if error occurs)
             result = {
                 "hall_rent": hall_rent,
                 "food": food,
@@ -72,7 +72,7 @@ def calculate():
                 "total": round(total, 2)
             }
         except ValueError:
-            result = "Invalid input! Please enter numeric values."
+            result = {"error": "Invalid input! Please enter numeric values."}
 
     return render_template("index.html", result=result, values=values)
 
