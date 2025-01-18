@@ -54,7 +54,7 @@ def calculate():
                 photo + decoration + evening_tea + dinner + morning_breakfast + pedhe
             )
 
-            # Result summary (always return a dictionary, even if error occurs)
+            # Result summary
             result = {
                 "hall_rent": hall_rent,
                 "food": food,
@@ -67,7 +67,7 @@ def calculate():
                 "dinner": dinner,
                 "morning_breakfast": morning_breakfast,
                 "pedhe": pedhe,
-                "gst": round(gst, 2),
+                "gst": round(gst, 2),  # Always add gst to result
                 "gst_rate": gst_rate,  # Keep user-entered GST rate
                 "total": round(total, 2)
             }
