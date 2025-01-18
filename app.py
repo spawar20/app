@@ -1,3 +1,4 @@
+
 from flask import Flask, request, render_template
 import os
 
@@ -5,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def calculate():
-    result = {}
+    result = None
     gst = 0
     total = 0
     values = {}  # Store values entered by the user
@@ -67,12 +68,12 @@ def calculate():
                 "dinner": dinner,
                 "morning_breakfast": morning_breakfast,
                 "pedhe": pedhe,
-                "gst": round(gst, 2),  # Always add gst to result
+                "gst": round(gst, 2),
                 "gst_rate": gst_rate,  # Keep user-entered GST rate
                 "total": round(total, 2)
             }
         except ValueError:
-            result = {"error": "Invalid input! Please enter numeric values."}
+            result = "Invalid input! Please enter numeric values."
 
     return render_template("index.html", result=result, values=values)
 
