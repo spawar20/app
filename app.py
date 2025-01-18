@@ -1,4 +1,3 @@
-
 from flask import Flask, request, render_template
 import os
 
@@ -6,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def calculate():
-    result = None
+    result = {}
     gst = 0
     total = 0
 
@@ -20,6 +19,7 @@ def calculate():
             saman = float(request.form.get("saman", 0))
             photo = float(request.form.get("photo", 0))
             decoration = float(request.form.get("decoration", 45000))  # Default value
+            haldi = float(request.form.get("haldi", 0))  # New field for Haldi
             evening_tea = float(request.form.get("evening_tea", 0))
             dinner = float(request.form.get("dinner", 0))
             morning_breakfast = float(request.form.get("morning_breakfast", 0))
@@ -33,7 +33,8 @@ def calculate():
             # Total calculation
             total = (
                 hall_rent + gst + food + miscellaneous + guruji + saman +
-                photo + decoration + evening_tea + dinner + morning_breakfast + pedhe
+                photo + decoration + haldi + evening_tea + dinner +
+                morning_breakfast + pedhe
             )
 
             # Result summary
@@ -45,15 +46,17 @@ def calculate():
                 "saman": saman,
                 "photo": photo,
                 "decoration": decoration,
+                "haldi": haldi,  # Include Haldi in the result
                 "evening_tea": evening_tea,
                 "dinner": dinner,
                 "morning_breakfast": morning_breakfast,
                 "pedhe": pedhe,
                 "gst": round(gst, 2),
-                "total": round(total, 2)
+                "total": round(total, 2),
+                "gst_option": gst_option  # Persist GST option
             }
         except ValueError:
-            result = "Invalid input! Please enter numeric values."
+            result = {"error": "Invalid input! Please enter numeric values."}
 
     return render_template("index.html", result=result)
 
