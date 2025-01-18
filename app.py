@@ -1,3 +1,4 @@
+
 from flask import Flask, request, render_template
 import os
 
@@ -5,10 +6,9 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def calculate():
-    result = {}
+    result = None
     gst = 0
     total = 0
-    gst_rate = 18  # Fixed GST rate at 18%
 
     if request.method == "POST":
         try:
@@ -28,7 +28,7 @@ def calculate():
 
             # Calculate GST only if "Yes" is selected
             if gst_option == "yes":
-                gst = (gst_rate / 100) * hall_rent
+                gst = 0.18 * hall_rent
 
             # Total calculation
             total = (
@@ -50,14 +50,13 @@ def calculate():
                 "morning_breakfast": morning_breakfast,
                 "pedhe": pedhe,
                 "gst": round(gst, 2),
-                "gst_rate": gst_rate,  # Fixed GST rate
                 "total": round(total, 2)
             }
         except ValueError:
-            result = {"error": "Invalid input! Please enter numeric values."}
+            result = "Invalid input! Please enter numeric values."
 
     return render_template("index.html", result=result)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Get port from environment variables
+    port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
