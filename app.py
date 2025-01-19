@@ -17,10 +17,10 @@ def calculate():
             miscellaneous = float(request.form.get("miscellaneous", 30000))  # Default value
             guruji = float(request.form.get("guruji", 0))
             saman = float(request.form.get("saman", 0))
-            photo = float(request.form.get("photo", 0))
+            photo = float(request.form.get("photo", 40000))
             decoration = float(request.form.get("decoration", 45000))  # Default value
-            haldi = float(request.form.get("haldi", 0))  # New field for Haldi
-            evening_tea = float(request.form.get("evening_tea", 0))
+            haldi = float(request.form.get("haldi", 40000))  # New field for Haldi
+            evening_tea = float(request.form.get("evening_tea", 2000))
             dinner = float(request.form.get("dinner", 0))
             morning_breakfast = float(request.form.get("morning_breakfast", 0))
             pedhe = float(request.form.get("pedhe", 0))
