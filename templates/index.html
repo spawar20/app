@@ -54,18 +54,27 @@
     </form>
 
     {% if result %}
-        {% if result.error %}
-            <h2>{{ result.error }}</h2>
+    {% if result.error %}
+        <h2>{{ result.error }}</h2>
+    {% else %}
+        <h2>Calculation Result:</h2>
+        <p><strong>Hall Rent:</strong> ₹{{ result.hall_rent }}</p>
+        <p><strong>Food Cost:</strong> ₹{{ result.food }}</p>
+        <p><strong>Miscellaneous Cost:</strong> ₹{{ result.miscellaneous }}</p>
+        <p><strong>Guruji Cost:</strong> ₹{{ result.guruji }}</p>
+        <p><strong>Saman Cost:</strong> ₹{{ result.saman }}</p>
+        <p><strong>Photo Cost:</strong> ₹{{ result.photo }}</p>
+        <p><strong>Decoration Cost:</strong> ₹{{ result.decoration }}</p>
+        <p><strong>Haldi Cost:</strong> ₹{{ result.haldi }}</p>
+        <p><strong>Evening Tea Cost:</strong> ₹{{ result.evening_tea }}</p>
+        <p><strong>Dinner Cost:</strong> ₹{{ result.dinner }}</p>
+        <p><strong>Morning Breakfast Cost:</strong> ₹{{ result.morning_breakfast }}</p>
+        <p><strong>Pedhe Cost:</strong> ₹{{ result.pedhe }}</p>
+        {% if result.gst %}
+            <p><strong>GST (18% on Hall Rent):</strong> ₹{{ result.gst }}</p>
         {% else %}
-            <h2>Calculation Result:</h2>
-            <p><strong>Hall Rent:</strong> ₹{{ result.hall_rent }}</p>
-            {% if result.gst %}
-                <p><strong>GST (18% on Hall Rent):</strong> ₹{{ result.gst }}</p>
-            {% else %}
-                <p><strong>GST:</strong> Not Included</p>
-            {% endif %}
-            <p><strong>Total:</strong> ₹{{ result.total }}</p>
+            <p><strong>GST:</strong> Not Included</p>
         {% endif %}
+        <p><strong>Total:</strong> ₹{{ result.total }}</p>
     {% endif %}
-</body>
-</html>
+{% endif %}
